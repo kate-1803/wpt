@@ -150,13 +150,6 @@ function stepStart(nsteps) {
   };
 }
 
-function framesTiming(nframes) {
-  return x => {
-    const result = Math.floor(x * nframes) / (nframes - 1);
-    return (result > 1.0 && x <= 1.0) ? 1.0 : result;
-  };
-}
-
 function waitForAnimationFrames(frameCount) {
   return new Promise(resolve => {
     function handleFrame() {
@@ -191,13 +184,13 @@ function waitForAnimationFramesWithDelay(minDelay) {
 function waitForNextFrame() {
   const timeAtStart = document.timeline.currentTime;
   return new Promise(resolve => {
-    window.requestAnimationFrame(() => {
-      if (timeAtStart === document.timeline.currentTime) {
-        window.requestAnimationFrame(resolve);
-      } else {
-        resolve();
-      }
-    });
+   (function handleFrame() {
+    if (timeAtStart === document.timeline.currentTime) {
+      window.requestAnimationFrame(handleFrame);
+    } else {
+      resolve();
+    }
+  }());
   });
 }
 
@@ -213,7 +206,7 @@ function rotate3dToMatrix3d(x, y, z, radian) {
 }
 
 // Returns an array of the 4x4 matrix equivalent to 'rotate3d(x, y, z, radian)'.
-// https://www.w3.org/TR/css-transforms-1/#Rotate3dDefined
+// https://drafts.csswg.org/css-transforms-2/#Rotate3dDefined
 function rotate3dToMatrix(x, y, z, radian) {
   const sc = Math.sin(radian / 2) * Math.cos(radian / 2);
   const sq = Math.sin(radian / 2) * Math.sin(radian / 2);

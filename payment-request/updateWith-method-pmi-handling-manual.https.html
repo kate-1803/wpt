@@ -8,11 +8,21 @@
 <script>
 "use strict";
 setup({ explicit_done: true, explicit_timeout: true });
+const applePay = Object.freeze({
+  supportedMethods: "https://apple.com/apple-pay",
+  data: {
+    version: 3,
+    merchantIdentifier: "merchant.com.example",
+    countryCode: "US",
+    merchantCapabilities: ["supports3DS"],
+    supportedNetworks: ["visa"],
+  }
+});
 const validMethod = Object.freeze({
   supportedMethods: "https://:@wpt.fyi:443/payment-request",
 });
 
-const validMethods = Object.freeze([validMethod]);
+const validMethods = Object.freeze([validMethod, applePay]);
 
 const validAmount = Object.freeze({
   currency: "USD",
@@ -126,6 +136,6 @@ function manualTest(button, { invalidMethod }) {
   </li>
 </ol>
 <small>
-  If you find a buggy test, please <a href="https://github.com/w3c/web-platform-tests/issues">file a bug</a>
-  and tag one of the <a href="https://github.com/w3c/web-platform-tests/blob/master/payment-request/OWNERS">owners</a>.
+  If you find a buggy test, please <a href="https://github.com/web-platform-tests/wpt/issues">file a bug</a>
+  and tag one of the <a href="https://github.com/web-platform-tests/wpt/blob/master/payment-request/META.yml">suggested reviewers</a>.
 </small>

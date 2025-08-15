@@ -24,6 +24,13 @@
 
   const validMethodApplePay = Object.freeze({
     supportedMethods: "https://apple.com/apple-pay",
+    data: {
+      version: 3,
+      merchantIdentifier: "merchant.com.example",
+      countryCode: "US",
+      merchantCapabilities: ["supports3DS"],
+      supportedNetworks: ["visa"],
+    }
   });
 
   // Methods
@@ -276,6 +283,6 @@
 </ol>
 
 <small>
-  If you find a buggy test, please <a href="https://github.com/w3c/web-platform-tests/issues">file a bug</a>
-  and tag one of the <a href="https://github.com/w3c/web-platform-tests/blob/master/payment-request/OWNERS">owners</a>.
+  If you find a buggy test, please <a href="https://github.com/web-platform-tests/wpt/issues">file a bug</a>
+  and tag one of the <a href="https://github.com/web-platform-tests/wpt/blob/master/payment-request/META.yml">suggested reviewers</a>.
 </small>

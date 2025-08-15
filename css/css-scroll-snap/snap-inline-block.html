@@ -22,7 +22,7 @@ div {
   height: 200px;
   left: 300px;
   top: 300px;
-  scroll-snap-align: start end;
+  scroll-snap-align: end start;
 }
 </style>
 
@@ -38,7 +38,7 @@ var height = scroller.clientHeight;
 [
   ["horizontal-tb", 300, 500 - height],
   ["vertical-lr", 500 - width, 300],
-  ["vertical-rl", 300, 300]
+  ["vertical-rl", width - 700, 300]
 ].forEach(([writing_mode, left, top]) => {
   test(() => {
     scroller.style.writingMode = writing_mode;

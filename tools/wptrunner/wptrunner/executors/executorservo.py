@@ -1,22 +1,17 @@
+from __future__ import print_function
 import base64
-import hashlib
-import httplib
 import json
 import os
 import subprocess
 import tempfile
 import threading
-import traceback
-import urlparse
 import uuid
-from collections import defaultdict
 
 from mozprocess import ProcessHandler
 
-from serve.serve import make_hosts_file
+from tools.serve.serve import make_hosts_file
 
-from .base import (ExecutorException,
-                   ConnectionlessProtocol,
+from .base import (ConnectionlessProtocol,
                    RefTestImplementation,
                    testharness_result_converter,
                    reftest_result_converter,
@@ -24,9 +19,7 @@ from .base import (ExecutorException,
                    WebDriverProtocol)
 from .process import ProcessTestExecutor
 from ..browsers.base import browser_command
-from ..wpttest import WdspecResult, WdspecSubtestResult
 from ..webdriver_server import ServoDriverServer
-from .executormarionette import WdspecRun
 
 pytestrunner = None
 webdriver = None
@@ -130,7 +123,7 @@ class ServoTestharnessExecutor(ProcessTestExecutor):
                     self.proc.wait()
                 else:
                     self.proc.kill()
-        except KeyboardInterrupt:
+        except:  # noqa
             self.proc.kill()
             raise
 
@@ -144,7 +137,7 @@ class ServoTestharnessExecutor(ProcessTestExecutor):
             self.result_flag.set()
         else:
             if self.interactive:
-                print line
+                print(line)
             else:
                 self.logger.process_output(self.proc.pid,
                                            line,
@@ -187,6 +180,9 @@ class ServoRefTestExecutor(ProcessTestExecutor):
         self.implementation = RefTestImplementation(self)
         self.tempdir = tempfile.mkdtemp()
         self.hosts_path = write_hosts_file(server_config)
+
+    def reset(self):
+        self.implementation.reset()
 
     def teardown(self):
         try:
@@ -275,7 +271,7 @@ class ServoRefTestExecutor(ProcessTestExecutor):
     def on_output(self, line):
         line = line.decode("utf8", "replace")
         if self.interactive:
-            print line
+            print(line)
         else:
             self.logger.process_output(self.proc.pid,
                                        line,

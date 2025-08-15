@@ -10,22 +10,12 @@ connect to the device.
 ## Hosts
 
 Until we find a better way, we need to root the Android device and update the
-/etc/hosts file to include
-
-```
-127.0.0.1   web-platform.test
-127.0.0.1   www.web-platform.test
-127.0.0.1   www1.web-platform.test
-127.0.0.1   www2.web-platform.test
-127.0.0.1   xn--n8j6ds53lwwkrqhv28a.web-platform.test
-127.0.0.1   xn--lve-6lad.web-platform.test
-0.0.0.0     nonexistent-origin.web-platform.test
-```
+/etc/hosts file to include the entries printed by `./wpt make-hosts-file`.
 
 ## CA certificate
 
 In order to run HTTPS tests, we need to add
-[WPT's CA](https://github.com/w3c/web-platform-tests/blob/master/tools/certs/cacert.pem)
+[WPT's CA](https://github.com/web-platform-tests/wpt/blob/master/tools/certs/cacert.pem)
 to the phone. First, convert the certificate from PEM to CRT:
 
 ```
@@ -36,6 +26,9 @@ Then copy `cacert.crt` to your phone's external storage (preferably to
 Downloads/ as it'll be easier to find). Open Settings -> Security & location ->
 Encryption & credentials -> Install from storage. Find and install `cacert.crt`.
 (The setting entries might be slightly different based your Android version.)
+
+Note that having this CA installed on your device outside of a test
+environment represents a security risk.
 
 
 Finally, we may run wpt with the `chrome_android` product

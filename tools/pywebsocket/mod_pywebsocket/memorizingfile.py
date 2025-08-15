@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-#
 # Copyright 2011, Google Inc.
 # All rights reserved.
 #
@@ -36,9 +34,6 @@ A memorizing file wraps a file and memorizes lines read by readline.
 """
 
 
-import sys
-
-
 class MemorizingFile(object):
 
     """MemorizingFile wraps a file and memorizes lines read by readline.
@@ -48,7 +43,7 @@ class MemorizingFile(object):
     the control reaches WebSocketRequestHandler.
     """
 
-    def __init__(self, file_, max_memorized_lines=sys.maxint):
+    def __init__(self, file_, max_memorized_lines=0x7FFFFFFF):
         """Construct an instance.
 
         Args:
@@ -65,7 +60,7 @@ class MemorizingFile(object):
 
     def __getattribute__(self, name):
         """Return a file attribute.
-        
+
         Returns the value overridden by this class for some attributes,
         and forwards the call to _file for the other attributes.
         """
